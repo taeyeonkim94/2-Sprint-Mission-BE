@@ -50,6 +50,36 @@ app.get(
   })
 );
 //************************PRODUCTS********************************
+// app.get(
+//   "/products",
+//   asyncHandler(async (req, res) => {
+//     const { page, pageSize, order, keyword } = checkAndConvertPageParams(
+//       req.query
+//     );
+//     const orderBy =
+//       order === "oldest"
+//         ? { createdAt: "asc" }
+//         : order === "newest"
+//         ? { createdAt: "desc" }
+//         : order === "favoritest"
+//         ? { favorite: "desc" }
+//         : {};
+//     const products = await prisma.product.findMany({
+//       orderBy,
+//       skip: page * pageSize,
+//       take: pageSize,
+//       where: keyword
+//         ? {
+//             OR: [
+//               { name: { contains: keyword, mode: "insensitive" } },
+//               { description: { contains: keyword, mode: "insensitive" } }
+//             ]
+//           }
+//         : undefined
+//     });
+//     res.send(products);
+//   })
+// );
 app.get(
   "/products",
   asyncHandler(async (req, res) => {
@@ -64,20 +94,24 @@ app.get(
         : order === "favoritest"
         ? { favorite: "desc" }
         : {};
-    const products = await prisma.product.findMany({
-      orderBy,
-      skip: page * pageSize,
-      take: pageSize,
-      where: keyword
-        ? {
-            OR: [
-              { name: { contains: keyword, mode: "insensitive" } },
-              { description: { contains: keyword, mode: "insensitive" } }
-            ]
-          }
-        : undefined
-    });
-    res.send(products);
+    const whereClause = keyword
+      ? {
+          OR: [
+            { name: { contains: keyword, mode: "insensitive" } },
+            { description: { contains: keyword, mode: "insensitive" } }
+          ]
+        }
+      : undefined;
+    const [products, totalCount] = await Promise.all([
+      prisma.product.findMany({
+        orderBy,
+        skip: page * pageSize,
+        take: pageSize,
+        where: whereClause
+      }),
+      prisma.product.count({ where: whereClause })
+    ]);
+    res.send({ products, totalCount });
   })
 );
 app.get(

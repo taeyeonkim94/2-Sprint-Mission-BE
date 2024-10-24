@@ -1,9 +1,13 @@
 GET https://two-sprint-mission-be-8e56.onrender.com/users
 ###
-GET http://localhost:3000/users/f47ac10b-58cc-4372-a567-0e02b2c3d479
+GET http://localhost:3000/users/
 ###
 //**************************Product*********************************************
 GET https://two-sprint-mission-be-8e56.onrender.com/products
+###
+GET http://localhost:3000/products
+###
+GET http://localhost:3000/products/?page=0
 ###
 PATCH http://localhost:3000/products/2f72ee0e-be18-4fe5-bae0-28cc59a9a081
 Content-Type: application/json
