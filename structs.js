@@ -31,6 +31,7 @@ export const CreateProductComment = s.object({
 export const PatchProductCommnet = s.partial(CreateProductComment);
 
 export const CreateArticleComment = s.object({
-  content: s.string()
+  content: s.string(),
+  favoriteCount: s.max(s.number(), 0)
 });
 export const PatchArticleComment = s.partial(CreateArticleComment);

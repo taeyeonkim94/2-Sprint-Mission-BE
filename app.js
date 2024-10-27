@@ -86,13 +86,14 @@ app.get(
     const { page, pageSize, order, keyword } = checkAndConvertPageParams(
       req.query
     );
+    console.log(keyword);
     const orderBy =
       order === "oldest"
         ? { createdAt: "asc" }
         : order === "newest"
         ? { createdAt: "desc" }
         : order === "favoritest"
-        ? { favorite: "desc" }
+        ? { favoriteCount: "desc" }
         : {};
     const whereClause = keyword
       ? {
@@ -125,7 +126,13 @@ app.get(
 app.post(
   "/products",
   asyncHandler(async (req, res) => {
-    const { userId, ...productData } = req.body;
+    const { userId, price, ...otherProductData } = req.body;
+    const productData = {
+      ...otherProductData,
+      price: parseInt(price)
+    };
+    productData.favoriteCount = 0;
+    console.log(productData);
     assert(productData, CreateProduct);
     if (!userId) throw new Error(NOT_FOUND_USERID_MESSAGE);
     const product = await prisma.product.create({
@@ -168,22 +175,49 @@ app.get(
     const { page, pageSize, order, keyword } = checkAndConvertPageParams(
       req.query
     );
+    console.log(`keyword:${keyword}`);
     const orderBy =
-      order === "recent" ? { createdAt: "desc" } : { createdAt: "asc" };
-    const article = await prisma.article.findMany({
-      orderBy,
-      skip: page * pageSize,
-      take: pageSize,
-      where: keyword
-        ? {
-            OR: [
-              { title: { contains: keyword } },
-              { content: { contains: keyword } }
-            ]
-          }
-        : undefined
+      order === "recent"
+        ? { createdAt: "desc" }
+        : order === "favoritest"
+        ? { favoriteCount: "desc" }
+        : { createdAt: "asc" };
+    const whereClause = keyword
+      ? {
+          OR: [
+            { title: { contains: keyword, mode: "insensitive" } },
+            { content: { contains: keyword, mode: "insensitive" } }
+          ]
+        }
+      : undefined;
+    console.log(`whereClause:${JSON.stringify(whereClause)}`);
+    const [articles, totalCount] = await Promise.all([
+      prisma.article.findMany({
+        orderBy,
+        skip: page * pageSize,
+        take: pageSize,
+        where: whereClause
+      }),
+      prisma.article.count({ where: whereClause })
+    ]);
+    res.send({
+      articles,
+      totalCount
     });
-    res.send(article);
+    // const article = await prisma.article.findMany({
+    //   orderBy,
+    //   skip: page * pageSize,
+    //   take: pageSize,
+    //   where: keyword
+    //     ? {
+    //         OR: [
+    //           { title: { contains: keyword } },
+    //           { content: { contains: keyword } }
+    //         ]
+    //       }
+    //     : undefined
+    // });
+    // res.send(article);
   })
 );
 app.get(
@@ -196,11 +230,95 @@ app.get(
     res.send(article);
   })
 );
+app.get(
+  "/articles/:id/withcomments",
+  asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const {
+      order = "recent",
+      page = 0,
+      pageSize = 10
+    } = checkAndConvertPageParams(req.query);
+
+    const orderBy =
+      order === "favoritest"
+        ? { favoriteCount: "desc" }
+        : order === "recent"
+        ? { createdAt: "desc" }
+        : { createdAt: "asc" };
+
+    const skip = page * pageSize;
+    const take = pageSize;
+
+    const [article, totalCount] = await Promise.all([
+      prisma.article.findUniqueOrThrow({
+        where: { id },
+        include: {
+          articleComments: {
+            orderBy,
+            skip,
+            take
+          }
+        }
+      }),
+      prisma.articleComment.count({
+        where: { articleId: id } // 해당 기사의 댓글 수를 카운트
+      })
+    ]);
+
+    // 응답 데이터 구성
+    const responseData = {
+      article,
+      articleComments: {
+        comments: article.articleComments,
+        totalCount // 토탈 카운트를 포함
+      }
+    };
+
+    // 응답 반환
+    res.send(responseData);
+  })
+);
+// app.get(
+//   "/articles/:id/withcomments",
+//   asyncHandler(async (req, res) => {
+//     const { id } = req.params;
+//     const {
+//       order = "recent",
+//       page,
+//       pageSize
+//     } = checkAndConvertPageParams(req.query);
+//     const orderBy =
+//       order === "favoritest"
+//         ? { favoriteCount: "desc" }
+//         : order === "recent"
+//         ? { createdAt: "desc" }
+//         : { createdAt: "asc" };
+//     const skip = page * pageSize;
+//     const take = pageSize;
+//     const totalCount = await prisma.articleComment.count({
+//       where: { articleId: id } // 해당 기사의 댓글 수를 카운트
+//     });
+//     const article = await prisma.article.findUniqueOrThrow({
+//       where: { id },
+//       include: {
+//         articleComments: {
+//           orderBy,
+//           skip,
+//           take
+//         },
+//         commentTotalCount:totalCount
+//       }
+//     });
+
+//     res.send(article);
+//   })
+// );
 app.post(
   "/articles",
   asyncHandler(async (req, res) => {
     const { userId, ...articleData } = req.body;
-    assert(articleData, CreateArticle);
+    //assert(articleData, CreateArticle);
     if (!userId) throw new Error(NOT_FOUND_USERID_MESSAGE);
     const article = await prisma.article.create({
       data: {
@@ -332,7 +450,10 @@ app.post(
   "/article-comments",
   asyncHandler(async (req, res) => {
     const { userId, articleId, ...commentFields } = req.body;
-    assert(commentFields, CreateArticleComment);
+    console.log(userId);
+    console.log(articleId);
+    console.log(commentFields);
+    //assert(commentFields, CreateArticleComment);
     const comment = await prisma.articleComment.create({
       data: {
         user: { connect: { id: userId } },
@@ -340,6 +461,7 @@ app.post(
         ...commentFields
       }
     });
+    console.log(1);
     res.status(201).send(comment);
   })
 );
@@ -347,11 +469,12 @@ app.patch(
   "/article-comments/:id",
   asyncHandler(async (req, res) => {
     const { id } = req.params;
-    assert(req.body, PatchArticleComment);
+    //assert(req.body, PatchArticleComment);
     const comment = await prisma.articleComment.update({
       where: { id },
       data: req.body
     });
+    console.log(`성공:${comment}`);
     res.status(203).send(comment);
   })
 );

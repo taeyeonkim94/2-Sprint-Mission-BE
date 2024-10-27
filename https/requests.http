@@ -7,14 +7,34 @@ GET https://two-sprint-mission-be-8e56.onrender.com/products
 ###
 GET http://localhost:3000/products
 ###
-GET http://localhost:3000/products/?page=0
+GET http://localhost:3000/products?order=newest&page=0&pageSize=10
 ###
-PATCH http://localhost:3000/products/2f72ee0e-be18-4fe5-bae0-28cc59a9a081
+GET http://localhost:3000/products?order=newest&page=0&pageSize=1
+###
+GET http://localhost:3000/products?keyword=28
+###
+GET http://localhost:3000/products/?order=recent
+###
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+    "userId": "c2b44a5b-5d1f-4e6e-9b55-3f8e5e7e8b18",
+    "name": "쿠쿠 밥솥",
+    "description": "쿠쿠하세요~~ 쿠쿠~",
+    "price": 310000,
+    "tags": ["쿠쿠쿠쿠쿸"],
+    "images": [
+      "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/92/1725209779217/CRP-DHP0610FD.png"
+    ]
+}
+###
+PATCH http://localhost:3000/products/a6b7c8d9-e0f1-g2h3-i4j5-k6l7m8n9o0p1
 Content-Type: application/json
 
 {
     "name": "쿠쿠 밥솥",
-    "description": "쿠쿠하세요~~",
+    "description": "쿠쿠하세요~~ 쿠쿠~",
     "price": 310000,
     "tags": ["쿠쿠쿠쿠쿸"],
     "images": [
@@ -27,20 +47,36 @@ DELETE http://localhost:3000/products/2f72ee0e-be18-4fe5-bae0-28cc59a9a081
 //**********************Article******************************************
 GET https://two-sprint-mission-be-8e56.onrender.com/articles
 ###
-POST https://two-sprint-mission-be-8e56.onrender.com/articles
+GET http://localhost:3000/articles?keyword=2
+###
+GET http://localhost:3000/articles/f1a2b3c4-d5e6-7f8g-9h0i-j1k2l3m4n5o6
+###
+GET http://localhost:3000/articles/f1a2b3c4-d5e6-7f8g-9h0i-j1k2l3m4n5o6/withcomments?order=favoritest
+###
+GET http://localhost:3000/articles
+###
+POST http://localhost:3000/articles
 Content-Type: application/json
 
 {
-  "userId": "f47ac10b-58cc-4372-a567-0e02b2c3d480",
+  "userId": "c2b44a5b-5d1f-4e6e-9b55-3f8e5e7e8b18",
   "title": "리퀘스트요청 제목",
   "content": "리퀘스트요청 내용"
 }
-###
-PATCH http://localhost:3000/articles/02c75b12-c8fc-4fae-87db-053f98b6db11
+### 
+PATCH http://localhost:3000/articles/9fa87898-f938-4c36-b9cb-e78b30942d54
 Content-Type: application/json
 
 {
-  "title": "리퀘스트 수정 요청"
+  "title": "제목수정",
+  "content": "내용수정"
+}
+###
+PATCH http://localhost:3000/articles/i4d5e6f7-g8h9-0i1j-k2l3-m4n5o6p7q8r9
+Content-Type: application/json
+
+{
+  "title": "제목수정"
 }
 ###
 DELETE http://localhost:3000/articles/02c75b12-c8fc-4fae-87db-053f98b6db11
@@ -76,16 +112,17 @@ POST http://localhost:3000/article-comments
 Content-Type: application/json
 
 {
-  "userId": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-  "articleId": "a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p5",
+  "userId": "c2b44a5b-5d1f-4e6e-9b55-3f8e5e7e8b18",
+  "articleId": "6095ebc6-fcfe-417a-a045-5c838d554940",
   "content": "댓글입니다"
 }
 ###
-PATCH http://localhost:3000/article-comments/42c4f072-ad26-4650-b001-45a0666bf8af
+PATCH http://localhost:3000/article-comments/d101a98c-43cb-45f9-8fd2-6ac34848ce24
 Content-Type: application/json
 
 {
-  "content": "수정된 댓글입니다"
+  "content": "수정된 댓글입니다",
+  "favoriteCount": 3
 }
 ###
-DELETE http://localhost:3000/article-comments/42c4f072-ad26-4650-b001-45a0666bf8af
+DELETE http://localhost:3000/article-comments/3b1f9f0b-82dc-40f3-a29f-a6c19f553bf4
