@@ -12,7 +12,7 @@ export const getProducts = asyncHandler(async (req, res) => {
   const orderBy =
     order === "oldest"
       ? { createdAt: "asc" }
-      : order === "newest"
+      : order === "recent"
       ? { createdAt: "desc" }
       : order === "favoritest"
       ? { favoriteCount: "desc" }
@@ -44,13 +44,18 @@ export const getProductById = asyncHandler(async (req, res) => {
 });
 
 export const postProduct = asyncHandler(async (req, res) => {
-  const { userId, price, ...otherProductData } = req.body;
+  const { price, ...otherProductData } = req.body;
+  console.log(req);
   const productData = {
     ...otherProductData,
     price: parseInt(price)
   };
+
+  const { userId } = req.user;
+
   //assert(productData, CreateProduct);
   if (!userId) throw new Error(NOT_FOUND_USERID_MESSAGE);
+  console.log(userId);
   const product = await prisma.product.create({
     data: {
       ...productData,

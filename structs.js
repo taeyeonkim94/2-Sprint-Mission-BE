@@ -16,8 +16,8 @@ export const PatchProduct = s.partial(CreateProduct);
 
 export const CreateUser = s.object({
   email: s.define(isEmail, isEmail),
-  nickName: s.string(),
-  image: s.string()
+  nickname: s.string(),
+  password: s.size(s.string(), 8, 16)
 });
 export const CreateArticle = s.object({
   title: s.string(),

@@ -21,6 +21,7 @@ import productsRouter from "./routes/productsRoutes.js";
 import articlesRouter from "./routes/articlesRoutes.js";
 import productCommentsRouter from "./routes/productCommentsRoutes.js";
 import articleCommentsRouter from "./routes/articleCommentsRoute.js";
+import authRouter from "./routes/authRoutes.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -35,74 +36,5 @@ app.use("/products", productsRouter);
 app.use("/articles", articlesRouter);
 app.use("/products/:productId/comments", productCommentsRouter);
 app.use("/articles/:articleId/comments", articleCommentsRouter);
-//**************************ArticleComment*****************************************/
-// app.get(
-//   "/article-comments",
-//   asyncHandler(async (req, res) => {
-//     const { limit = 10, cursor } = req.query;
-//     const query = {
-//       orderBy: { createdAt: "desc" },
-//       take: parseInt(limit)
-//     };
-//     if (cursor) {
-//       query.cursor = { id: cursor };
-//       query.skip = 1;
-//     }
-//     const comments = await prisma.articleComment.findMany(query);
-//     res.send(comments);
-//   })
-// );
-// app.get(
-//   "/article-comments/:id",
-//   asyncHandler(async (req, res) => {
-//     const { id } = req.params;
-//     const comment = await prisma.articleComment.findUniqueOrThrow({
-//       where: { id }
-//     });
-//     res.send(comment);
-//   })
-// );
-// app.post(
-//   "/article-comments",
-//   asyncHandler(async (req, res) => {
-//     const { userId, articleId, ...commentFields } = req.body;
-//     console.log(userId);
-//     console.log(articleId);
-//     console.log(commentFields);
-//     //assert(commentFields, CreateArticleComment);
-//     const comment = await prisma.articleComment.create({
-//       data: {
-//         user: { connect: { id: userId } },
-//         article: { connect: { id: articleId } },
-//         ...commentFields
-//       }
-//     });
-//     console.log(1);
-//     res.status(201).send(comment);
-//   })
-// );
-// app.patch(
-//   "/article-comments/:id",
-//   asyncHandler(async (req, res) => {
-//     const { id } = req.params;
-//     //assert(req.body, PatchArticleComment);
-//     const comment = await prisma.articleComment.update({
-//       where: { id },
-//       data: req.body
-//     });
-//     console.log(`성공:${comment}`);
-//     res.status(203).send(comment);
-//   })
-// );
-// app.delete(
-//   "/article-comments/:id",
-//   asyncHandler(async (req, res) => {
-//     const { id } = req.params;
-//     const comment = await prisma.articleComment.delete({
-//       where: { id }
-//     });
-//     res.sendStatus(204);
-//   })
-// );
-
+app.use("/auth", authRouter);
 app.listen(PORT, () => console.log(`서버가 ${PORT}에서 실행중입니다.`));
