@@ -1,0 +1,63 @@
+GET https://two-sprint-mission-be-8e56.onrender.com/products
+###
+GET http://localhost:3001/products
+###
+GET http://localhost:3001/products?order=newest&page=0&pageSize=10
+###
+GET http://localhost:3001/products?order=newest&page=0&pageSize=1
+###
+GET http://localhost:3001/products?keyword=28
+###
+GET http://localhost:3001/products/?order=recent
+###
+POST http://localhost:3001/products
+Content-Type: application/json
+
+{
+    "userId": "c2b44a5b-5d1f-4e6e-9b55-3f8e5e7e8b18",
+    "name": "쿠쿠 밥솥",
+    "description": "쿠쿠하세요~~ 쿠쿠~",
+    "price": 310000,
+    "tags": ["쿠쿠쿠쿠쿸"],
+    "images": [
+      "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/92/1725209779217/CRP-DHP0610FD.png"
+    ]
+}
+###
+PATCH http://localhost:3001/products/48d51e17-9326-4ce4-b8be-571e5ac4a7ca
+Content-Type: application/json
+
+{
+    "name": "쿠쿠 밥솥",
+    "description": "쿠쿠하세요~~ 쿠쿠~",
+    "price": 310000,
+    "tags": ["쿠쿠쿠쿠쿸"],
+    "images": [
+      "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/92/1725209779217/CRP-DHP0610FD.png"
+    ]
+}
+###
+DELETE http://localhost:3001/products/48d51e17-9326-4ce4-b8be-571e5ac4a7ca
+###
+############productComments#############
+GET http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments
+###
+GET http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments?limit=3
+###
+PATCH http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments/c1754e19-b478-4e94-b399-9aa2b9d9aa5c
+Content-Type: application/json
+
+{
+  "content": "수정된 댓글입니다"
+}
+###
+POST http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments
+Content-Type: application/json
+
+{
+  "userId": "c2b44a5b-5d1f-4e6e-9b55-3f8e5e7e8b18",
+  "content": "댓글입니다"
+}
+###
+DELETE  http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments/6637b64c-5d9e-4683-a894-2d5bc45dfb35
+###

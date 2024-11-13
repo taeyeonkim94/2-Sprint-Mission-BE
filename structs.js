@@ -9,8 +9,8 @@ export const CreateProduct = s.object({
   description: s.size(s.string(), 10, 100),
   price: s.min(s.number(), 1),
   tags: Tags,
-  images: Images,
-  favoriteCount: s.min(s.number(), 0)
+  images: Images
+  //favoriteCount: s.min(s.number(), 0)
 });
 export const PatchProduct = s.partial(CreateProduct);
 
