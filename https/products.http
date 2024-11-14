@@ -12,10 +12,10 @@ GET http://localhost:3001/products/?order=recent
 ###
 POST http://localhost:3001/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0MTQwYi03YTFlLTQ1Y2ItYTM0My01ZTJiZmY4ZDZlMWMiLCJpYXQiOjE3MzE1MDg4MDIsImV4cCI6MTczMTUxMjQwMn0.sxz4W6rag9MeXJyWSTrbhzpFOF4qeQy54IMifK4L7HU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0MTQwYi03YTFlLTQ1Y2ItYTM0My01ZTJiZmY4ZDZlMWMiLCJpYXQiOjE3MzE1NDk2ODcsImV4cCI6MTczMTU1MzI4N30.tl0a_UMihu2i4ZD_ibxq9AjQa1ZB0ieLv1wMRVW2Tzc
 
 {
-    "name": "쿠쿠 밥솥123123",
+    "name": "쿠쿠 밥솥123123123123",
     "description": "쿠쿠하세요~~ 쿠쿠~",
     "price": 310000,
     "tags": ["쿠쿠쿠쿠쿸"],
@@ -24,12 +24,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0M
     ]
 }
 ###
-PATCH http://localhost:3001/products/14
+PATCH http://localhost:3001/products/15
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0MTQwYi03YTFlLTQ1Y2ItYTM0My01ZTJiZmY4ZDZlMWMiLCJpYXQiOjE3MzE1MDg4MDIsImV4cCI6MTczMTUxMjQwMn0.sxz4W6rag9MeXJyWSTrbhzpFOF4qeQy54IMifK4L7HU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0MTQwYi03YTFlLTQ1Y2ItYTM0My01ZTJiZmY4ZDZlMWMiLCJpYXQiOjE3MzE1NDk3NzQsImV4cCI6MTczMTU1MzM3NH0.-l9BZ8gnKzX7TJp_t8S0P8a9UVsz-E3CXfSZLE_qtz8
 
 {
-    "name": "수정된 쿠쿠 밥솥",
+    "name": "수정된 쿠쿠 밥솥123123123",
     "description": "쿠쿠하세요~~ 쿠쿠~",
     "price": 310000,
     "tags": ["쿠쿠쿠쿠쿸"],
@@ -38,8 +38,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0M
     ]
 }
 ###
-DELETE http://localhost:3001/products/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0MTQwYi03YTFlLTQ1Y2ItYTM0My01ZTJiZmY4ZDZlMWMiLCJpYXQiOjE3MzE1MDg4MDIsImV4cCI6MTczMTUxMjQwMn0.sxz4W6rag9MeXJyWSTrbhzpFOF4qeQy54IMifK4L7HU
+DELETE http://localhost:3001/products/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0MTQwYi03YTFlLTQ1Y2ItYTM0My01ZTJiZmY4ZDZlMWMiLCJpYXQiOjE3MzE1NDk3NzQsImV4cCI6MTczMTU1MzM3NH0.-l9BZ8gnKzX7TJp_t8S0P8a9UVsz-E3CXfSZLE_qtz8
 ############productComments#############
 GET http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments
 ###

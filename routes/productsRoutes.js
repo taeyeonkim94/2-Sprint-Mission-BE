@@ -8,11 +8,22 @@ import {
   patchProduct,
   deleteProduct
 } from "../controllers/productsController.js";
+import { authorizeProductOwner } from "../middlewares/authorizationMiddleware.js";
 const productRouter = express.Router();
 productRouter.get("/", getProducts);
 productRouter.get("/:id", getProductById);
 productRouter.post("/", authMiddleware(), postProduct);
-productRouter.patch("/:id", authMiddleware(), patchProduct);
-productRouter.delete("/:id", authMiddleware(), deleteProduct);
+productRouter.patch(
+  "/:id",
+  authMiddleware(),
+  authorizeProductOwner,
+  patchProduct
+);
+productRouter.delete(
+  "/:id",
+  authMiddleware(),
+  authorizeProductOwner,
+  deleteProduct
+);
 
 export default productRouter;

@@ -51,7 +51,6 @@ export const postProduct = asyncHandler(async (req, res) => {
   };
   const { userId } = req.user;
   //assert(productData, CreateProduct);
-  if (!userId) throw new Error(NOT_FOUND_USERID_MESSAGE);
   const product = await prisma.product.create({
     data: {
       ...productData,
@@ -67,14 +66,16 @@ export const patchProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const parseIntId = parseInt(id);
   //assert(req.body, patchProduct);
-  const product = await prisma.product.findUniqueOrThrow({
-    where: { id: parseIntId }
-  });
-  if (!product) res.status(404).send({ message: NOT_FOUND_MESSAGE });
-  if (userId !== product.userId)
-    res.status(403).send({ message: NOT_AUTHORIZED_MESSAGE });
+
+  // const product = await prisma.product.findUniqueOrThrow({
+  //   where: { id: parseIntId }
+  // });
+  // if (!product) res.status(404).send({ message: NOT_FOUND_MESSAGE });
+  // if (userId !== product.userId)
+  //   res.status(403).send({ message: NOT_AUTHORIZED_MESSAGE });
+
   const updatedProduct = await prisma.product.update({
-    where: { id: parseId },
+    where: { id: parseIntId },
     data: req.body
   });
   res.status(201).send(updatedProduct);
@@ -84,12 +85,12 @@ export const deleteProduct = asyncHandler(async (req, res) => {
   const { userId } = req.user;
   const { id } = req.params;
   const parseIntId = parseInt(id);
-  const product = await prisma.product.findUniqueOrThrow({
-    where: { id: parseIntId }
-  });
-  if (!product) res.status(404).send({ message: NOT_FOUND_MESSAGE });
-  if (userId !== product.userId)
-    res.status(403).send({ message: NOT_AUTHORIZED_MESSAGE });
+  // const product = await prisma.product.findUniqueOrThrow({
+  //   where: { id: parseIntId }
+  // });
+  // if (!product) res.status(404).send({ message: NOT_FOUND_MESSAGE });
+  // if (userId !== product.userId)
+  //   res.status(403).send({ message: NOT_AUTHORIZED_MESSAGE });
   const deletedproduct = await prisma.product.delete({
     where: { id: parseIntId }
   });
