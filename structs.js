@@ -9,15 +9,15 @@ export const CreateProduct = s.object({
   description: s.size(s.string(), 10, 100),
   price: s.min(s.number(), 1),
   tags: Tags,
-  images: Images,
-  favoriteCount: s.min(s.number(), 0)
+  images: Images
+  //favoriteCount: s.min(s.number(), 0)
 });
 export const PatchProduct = s.partial(CreateProduct);
 
 export const CreateUser = s.object({
   email: s.define(isEmail, isEmail),
-  nickName: s.string(),
-  image: s.string()
+  nickname: s.string(),
+  password: s.size(s.string(), 8, 16)
 });
 export const CreateArticle = s.object({
   title: s.string(),
@@ -31,6 +31,7 @@ export const CreateProductComment = s.object({
 export const PatchProductCommnet = s.partial(CreateProductComment);
 
 export const CreateArticleComment = s.object({
-  content: s.string()
+  content: s.string(),
+  favoriteCount: s.max(s.number(), 0)
 });
 export const PatchArticleComment = s.partial(CreateArticleComment);

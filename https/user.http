@@ -1,0 +1,22 @@
+GET https://two-sprint-mission-be-8e56.onrender.com/users
+###
+GET http://localhost:3001/users/6a04140b-7a1e-45cb-a343-5e2bff8d6e1c
+###
+GET http://localhost:3001/users/d5c4e1b2-4b2d-4e8d-9b1c-1c5d8f7e3a5b
+###
+POST http://localhost:3001/users
+Content-Type: application/json
+
+{
+    "email": "skym0117@naver.com",
+    "nickname": "짭쿵s",
+    "password": "password"
+}
+###
+POST http://localhost:3001/auth/signIn
+Content-Type: application/json
+
+{
+   "email": "skym0117@naver.com",
+   "password": "password"
+}

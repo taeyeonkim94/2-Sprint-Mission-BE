@@ -1,0 +1,64 @@
+GET https://two-sprint-mission-be-8e56.onrender.com/products
+###
+GET http://localhost:3001/products?order=recent&pageSize=15
+###
+GET http://localhost:3001/products?order=newest&page=2&pageSize=10
+###
+GET http://localhost:3001/products?order=newest&page=0&pageSize=1
+###
+GET http://localhost:3001/products?keyword=28
+###
+GET http://localhost:3001/products/?order=recent
+###
+POST http://localhost:3001/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0MTQwYi03YTFlLTQ1Y2ItYTM0My01ZTJiZmY4ZDZlMWMiLCJpYXQiOjE3MzE1NDk2ODcsImV4cCI6MTczMTU1MzI4N30.tl0a_UMihu2i4ZD_ibxq9AjQa1ZB0ieLv1wMRVW2Tzc
+
+{
+    "name": "쿠쿠 밥솥123123123123",
+    "description": "쿠쿠하세요~~ 쿠쿠~",
+    "price": 310000,
+    "tags": ["쿠쿠쿠쿠쿸"],
+    "images": [
+      "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/92/1725209779217/CRP-DHP0610FD.png"
+    ]
+}
+###
+PATCH http://localhost:3001/products/15
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0MTQwYi03YTFlLTQ1Y2ItYTM0My01ZTJiZmY4ZDZlMWMiLCJpYXQiOjE3MzE1NDk3NzQsImV4cCI6MTczMTU1MzM3NH0.-l9BZ8gnKzX7TJp_t8S0P8a9UVsz-E3CXfSZLE_qtz8
+
+{
+    "name": "수정된 쿠쿠 밥솥123123123",
+    "description": "쿠쿠하세요~~ 쿠쿠~",
+    "price": 310000,
+    "tags": ["쿠쿠쿠쿠쿸"],
+    "images": [
+      "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/Sprint_Mission/user/92/1725209779217/CRP-DHP0610FD.png"
+    ]
+}
+###
+DELETE http://localhost:3001/products/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTA0MTQwYi03YTFlLTQ1Y2ItYTM0My01ZTJiZmY4ZDZlMWMiLCJpYXQiOjE3MzE1NDk3NzQsImV4cCI6MTczMTU1MzM3NH0.-l9BZ8gnKzX7TJp_t8S0P8a9UVsz-E3CXfSZLE_qtz8
+############productComments#############
+GET http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments
+###
+GET http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments?limit=3
+###
+PATCH http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments/c1754e19-b478-4e94-b399-9aa2b9d9aa5c
+Content-Type: application/json
+
+{
+  "content": "수정된 댓글입니다"
+}
+###
+POST http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments
+Content-Type: application/json
+
+{
+  "userId": "c2b44a5b-5d1f-4e6e-9b55-3f8e5e7e8b18",
+  "content": "댓글입니다"
+}
+###
+DELETE  http://localhost:3001/products/5be566cd-b14a-436f-bd1e-9aaf7b3754d9/comments/6637b64c-5d9e-4683-a894-2d5bc45dfb35
+###
