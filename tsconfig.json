@@ -11,7 +11,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"] // '@'를 사용하여 'src' 디렉토리의 파일을 참조
+      "@/*": ["src/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
