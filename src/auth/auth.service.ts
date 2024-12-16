@@ -1,7 +1,7 @@
 import ErrorMessage from '@/common/enums/error.message.enums';
 import { UnauthorizedError } from '@/common/errors/CustomError';
 import { JwtService } from '@/jwt/jwt.service';
-import { AuthDto } from '@/types/auth.types';
+import { AuthDTO } from '@/types/auth.types';
 import { UserRepository } from '@/user/user.repository';
 import filterUserInfo from '@/utils/filterUserInfo';
 import passwordHashing from '@/utils/passwordHashing';
@@ -15,7 +15,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login(userData: AuthDto) {
+  async login(userData: AuthDTO) {
     const user = await this.userRepository.findUserByEmail(userData.email);
 
     if (!user) throw new UnauthorizedError(ErrorMessage.USER_UNAUTHORIZED_ID);

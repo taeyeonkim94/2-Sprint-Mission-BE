@@ -1,4 +1,6 @@
-const USERS = [
+import { User } from '@prisma/client';
+
+const USERS: User[] = [
   {
     id: 'e8394ccc-7359-4c16-ab37-4ed9671146a4',
     createdAt: new Date('2024-11-16T07:11:43.704559'),

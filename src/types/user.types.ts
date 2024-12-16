@@ -1,10 +1,10 @@
-export class CreateUserDto {
+export class CreateUserDTO {
   name: string;
   email: string;
   password: string;
 }
 
-export class ResponseUserDto {
+export class ResponseUserDTO {
   id: string;
   name: string;
   email: string;

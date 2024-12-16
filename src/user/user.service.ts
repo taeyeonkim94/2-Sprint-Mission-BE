@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { User } from '@prisma/client';
-import { CreateUserDto } from '@/types/user.types';
+import { CreateUserDTO } from '@/types/user.types';
 import passwordHashing from '@/utils/passwordHashing';
 import { ConflictError, NotFoundError } from '@/common/errors/CustomError';
 import ErrorMessage from '@/common/enums/error.message.enums';
@@ -21,7 +21,7 @@ export class UserService {
     return user;
   }
 
-  async createUser(userData: CreateUserDto): Promise<User | null> {
+  async createUser(userData: CreateUserDTO): Promise<User | null> {
     const { email, password } = userData;
     const existedUser = await this.userRepository.findUserByEmail(email);
     if (existedUser) throw new ConflictError(ErrorMessage.USER_EXIST);
