@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from '@prisma/client';
@@ -13,5 +13,11 @@ export class ProductController {
   async findMany(@Query() query: ProductOptionsDTO) {
     const { totalCount, list } = await this.productService.findMany(query);
     return { totalCount, list };
+  }
+
+  @Get(':id')
+  async findById(@Param() param: { id: string }) {
+    const product = await this.productService.findById(param.id);
+    return product;
   }
 }

@@ -5,4 +5,5 @@ export interface IProductService {
   findMany(
     options: ProductOptions,
   ): Promise<{ totalCount: number; list: Product[] }>;
+  findById(id: string): Promise<Product>;
 }

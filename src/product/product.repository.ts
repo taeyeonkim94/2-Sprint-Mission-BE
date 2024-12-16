@@ -33,4 +33,12 @@ export class ProductRepository implements IProductRepository {
     });
     return totalCount;
   }
+
+  async findById(id: string): Promise<Product | null> {
+    const product = await this.prisma.product.findUnique({
+      where: { id },
+      include: { productFavorites: true },
+    });
+    return product;
+  }
 }

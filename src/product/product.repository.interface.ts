@@ -4,4 +4,5 @@ import { Product } from '@prisma/client';
 export interface IProductRepository {
   findMany(options: ProductOptions): Promise<Product[]>;
   totalCount(option: ProductOptions): Promise<number>;
+  findById(id: string): Promise<Product | null>;
 }

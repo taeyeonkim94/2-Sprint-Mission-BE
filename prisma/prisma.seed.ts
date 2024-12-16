@@ -3,6 +3,7 @@ import { PrismaService } from './prisma.service';
 import USERS from './mock/mock.user';
 import { AppModule } from '../src/app.module';
 import PRODUCTS from './mock/mock.product';
+import PRODUCT_FAVORITES from './mock/mock.product.favorite';
 
 async function bootstrap() {
   const appContext = await NestFactory.createApplicationContext(AppModule);
@@ -11,6 +12,7 @@ async function bootstrap() {
   await appContext.close();
 }
 async function main(prisma: PrismaService) {
+  await prisma.productFavorite.deleteMany();
   await prisma.user.deleteMany();
   await prisma.product.deleteMany();
 
@@ -22,6 +24,11 @@ async function main(prisma: PrismaService) {
     data: PRODUCTS,
     skipDuplicates: true,
   });
+  await prisma.productFavorite.createMany({
+    data: PRODUCT_FAVORITES,
+    skipDuplicates: true,
+  });
+
   console.log('Seeding completed.');
 }
 bootstrap().catch((e) => {
