@@ -6,4 +6,5 @@ export interface IProductRepository {
   totalCount(option: ProductOptions): Promise<number>;
   findById(id: string): Promise<Product | null>;
   create(productData: CreateProductDTO): Promise<Product>;
+  delete(id: string): Promise<Product>;
 }

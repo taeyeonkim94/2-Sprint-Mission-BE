@@ -9,6 +9,8 @@ const enum ErrorMessage {
   TOKEN_UNAUTHORIZED_VALIDATION = '유효하지 않은 토큰입니다',
 
   PRODUCT_NOT_FOUND = '해당 상품을 찾을 수 없습니다.',
+  PRODUCT_FORBIDDEN = '해당 게시글을 삭제할 권리가 없습니다.',
+
   INTERNAL_SERVER_ERROR = '내부 서버 오류',
 }
 export default ErrorMessage;

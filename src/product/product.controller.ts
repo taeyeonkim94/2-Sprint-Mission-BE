@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { UsePipes, ValidationPipe } from '@nestjs/common';
 import { UploadedFiles, UseInterceptors, HttpStatus } from '@nestjs/common';
 import { ProductService } from './product.service';
@@ -42,5 +51,15 @@ export class ProductController {
     };
     const product = await this.productService.createProduct(productData);
     return product;
+  }
+
+  @Delete(':id')
+  async deleteProduct(
+    @Param() param: { id: string },
+    @Req() request: any,
+  ): Promise<HttpStatus> {
+    const { user } = request;
+    const product = await this.productService.deleteProduct(param.id, user.id);
+    return HttpStatus.NO_CONTENT;
   }
 }

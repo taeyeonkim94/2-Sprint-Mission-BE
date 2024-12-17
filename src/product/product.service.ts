@@ -4,7 +4,7 @@ import { ProductRepository } from './product.repository';
 import { CreateProductDTO, ProductOptions } from '@/types/product.types';
 import { Product } from '@prisma/client';
 import ErrorMessage from '@/common/enums/error.message.enums';
-import { NotFoundError } from '@/common/errors/CustomError';
+import { ForbiddenError, NotFoundError } from '@/common/errors/CustomError';
 
 @Injectable()
 export class ProductService implements IProductService {
@@ -40,6 +40,18 @@ export class ProductService implements IProductService {
 
     const product = await this.productRepository.create(storedProductData);
     //TODO. 반환할 때는 이미지로 변경
+    return product;
+  }
+
+  async deleteProduct(id: string, userId: string): Promise<Product> {
+    const product = await this.productRepository.findById(id);
+    if (!product) throw new NotFoundError(ErrorMessage.PRODUCT_NOT_FOUND);
+
+    if (product.ownerId !== userId) {
+      throw new ForbiddenError(ErrorMessage.PRODUCT_FORBIDDEN);
+    }
+
+    const deletedProduct = await this.productRepository.delete(id);
     return product;
   }
 }

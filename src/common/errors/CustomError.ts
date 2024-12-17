@@ -16,6 +16,12 @@ export class UnauthorizedError extends CustomError {
   } //401
 }
 
+export class ForbiddenError extends CustomError {
+  constructor(message: string) {
+    super(HttpStatus.FORBIDDEN, message);
+  }
+}
+
 export class NotFoundError extends CustomError {
   constructor(message: string) {
     super(HttpStatus.NOT_FOUND, message);

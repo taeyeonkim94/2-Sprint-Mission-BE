@@ -7,4 +7,5 @@ export interface IProductService {
   ): Promise<{ totalCount: number; list: Product[] }>;
   getProductById(id: string): Promise<Product>;
   createProduct(productData: CreateProductDTO): Promise<Product>;
+  deleteProduct(id: string, userId: string): Promise<Product>;
 }
