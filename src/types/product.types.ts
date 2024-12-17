@@ -1,5 +1,13 @@
-import { Type } from 'class-transformer';
-import { IsEnum, IsInt, IsOptional } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export enum ProductsOrderBy {
   recent = 'recent',
@@ -27,4 +35,40 @@ export class ProductOptions {
   pageSize: number;
   orderBy: ProductsOrderBy;
   keyword?: string;
+}
+
+export class CreateProductWithoutFilesDTO {
+  @IsNotEmpty()
+  title: string;
+
+  @IsNotEmpty()
+  description: string;
+
+  @Type(() => Number)
+  @IsInt()
+  price: number;
+
+  @Transform(({ value }) => {
+    const arrayValue: string[] = value;
+    return arrayValue;
+  })
+  @IsArray()
+  @ArrayMinSize(1)
+  tags: string[];
+}
+
+export class FilesDTO {
+  @IsArray()
+  @ArrayMinSize(1)
+  files: Express.Multer.File[];
+}
+
+export class CreateProductDTO {
+  title: string;
+  description: string;
+  price: number;
+  tags: string[];
+  files?: Express.Multer.File[];
+  images?: string[];
+  ownerId?: string;
 }

@@ -1,9 +1,10 @@
-import { ProductOptions } from '@/types/product.types';
+import { CreateProductDTO, ProductOptions } from '@/types/product.types';
 import { Product } from '@prisma/client';
 
 export interface IProductService {
-  findMany(
+  getProducts(
     options: ProductOptions,
   ): Promise<{ totalCount: number; list: Product[] }>;
-  findById(id: string): Promise<Product>;
+  getProductById(id: string): Promise<Product>;
+  createProduct(productData: CreateProductDTO): Promise<Product>;
 }

@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { IProductRepository } from './product.repository.interface';
-import { ProductOptions, ProductsOrderBy } from '@/types/product.types';
+import {
+  CreateProductDTO,
+  ProductOptions,
+  ProductsOrderBy,
+} from '@/types/product.types';
 import { Product } from '@prisma/client';
 import { contains } from 'class-validator';
 
@@ -38,6 +42,22 @@ export class ProductRepository implements IProductRepository {
     const product = await this.prisma.product.findUnique({
       where: { id },
       include: { productFavorites: true },
+    });
+    return product;
+  }
+
+  async create(productData: CreateProductDTO) {
+    const { title, description, price, images, tags, ownerId } = productData;
+
+    const product = await this.prisma.product.create({
+      data: {
+        title,
+        description,
+        price,
+        images,
+        tags,
+        owner: { connect: { id: ownerId } },
+      },
     });
     return product;
   }
