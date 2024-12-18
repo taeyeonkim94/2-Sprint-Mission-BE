@@ -18,6 +18,7 @@ import {
   ProductOptionsDTO,
 } from '@/types/product.types';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { User } from '@/decorators/user.decorator';
 
 @Controller('/products')
 export class ProductController {
@@ -39,15 +40,14 @@ export class ProductController {
   @UseInterceptors(FilesInterceptor('files'))
   async postProduct(
     @UploadedFiles() files: Express.Multer.File[],
-    @Req() request: any,
+    @User('id') userId: string,
     @Body() requestData: CreateProductWithoutFilesDTO,
   ) {
     // 파일 처리 로직
-    const { user } = request;
     const productData: CreateProductDTO = {
       ...requestData,
       files,
-      ownerId: user.id,
+      ownerId: userId,
     };
     const product = await this.productService.createProduct(productData);
     return product;
@@ -56,10 +56,9 @@ export class ProductController {
   @Delete(':id')
   async deleteProduct(
     @Param() param: { id: string },
-    @Req() request: any,
+    @User('id') userId: string,
   ): Promise<HttpStatus> {
-    const { user } = request;
-    const product = await this.productService.deleteProduct(param.id, user.id);
+    const product = await this.productService.deleteProduct(param.id, userId);
     return HttpStatus.NO_CONTENT;
   }
 }
