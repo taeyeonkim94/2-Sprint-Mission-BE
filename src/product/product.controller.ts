@@ -1,14 +1,5 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Query,
-  Req,
-} from '@nestjs/common';
-import { UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { Body, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { UploadedFiles, UseInterceptors, HttpStatus } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from '@prisma/client';
@@ -31,8 +22,8 @@ export class ProductController {
   }
 
   @Get(':id')
-  async getProductById(@Param() param: { id: string }) {
-    const product = await this.productService.getProductById(param.id);
+  async getProductById(@Param('id') id: string) {
+    const product = await this.productService.getProductById(id);
     return product;
   }
 

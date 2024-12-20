@@ -25,6 +25,7 @@
     "@aws-sdk/hash-node": "^3.374.0",
     "@aws-sdk/s3-request-presigner": "^3.715.0",
     "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.3.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^6.0.1",

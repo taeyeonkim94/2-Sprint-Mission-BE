@@ -6,6 +6,7 @@ import { Product } from '@prisma/client';
 import ErrorMessage from '@/common/enums/error.message.enums';
 import { ForbiddenError, NotFoundError } from '@/common/errors/CustomError';
 import { S3Service } from '@/s3/s3.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ProductService implements IProductService {
@@ -21,7 +22,6 @@ export class ProductService implements IProductService {
       this.productRepository.totalCount(options),
       this.productRepository.findMany(options),
     ]);
-
     return { totalCount, list };
   }
 

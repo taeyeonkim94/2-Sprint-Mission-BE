@@ -7,9 +7,19 @@ import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { JwtModule } from './jwt/jwt.module';
 import { AuthGuard } from './auth/auth.guard';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [PrismaModule, UserModule, AuthModule, ProductModule, JwtModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    PrismaModule,
+    UserModule,
+    AuthModule,
+    ProductModule,
+    JwtModule,
+  ],
   controllers: [],
   providers: [AuthGuard],
 })
