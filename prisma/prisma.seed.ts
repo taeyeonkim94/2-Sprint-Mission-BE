@@ -4,6 +4,7 @@ import USERS from './mock/mock.user';
 import { AppModule } from '../src/app.module';
 import PRODUCTS from './mock/mock.product';
 import PRODUCT_FAVORITES from './mock/mock.product.favorite';
+import { PRODUCT_IMAGES } from './mock/mock.productImage';
 
 async function bootstrap() {
   const appContext = await NestFactory.createApplicationContext(AppModule);
@@ -12,6 +13,7 @@ async function bootstrap() {
   await appContext.close();
 }
 async function main(prisma: PrismaService) {
+  await prisma.productImage.deleteMany();
   await prisma.productFavorite.deleteMany();
   await prisma.user.deleteMany();
   await prisma.product.deleteMany();
@@ -26,6 +28,10 @@ async function main(prisma: PrismaService) {
   });
   await prisma.productFavorite.createMany({
     data: PRODUCT_FAVORITES,
+    skipDuplicates: true,
+  });
+  await prisma.productImage.createMany({
+    data: PRODUCT_IMAGES,
     skipDuplicates: true,
   });
 

@@ -1,3 +1,4 @@
+import { ProductImage } from '@prisma/client';
 import { Transform, Type } from 'class-transformer';
 import {
   ArrayMinSize,
@@ -69,6 +70,20 @@ export class CreateProductDTO {
   price: number;
   tags: string[];
   files?: Express.Multer.File[];
-  images?: string[];
+  s3keys?: string[];
+  productImages?: ProductImage[];
+  images?: { id: string; imageUrl: string }[];
+  ownerId?: string;
+}
+
+export class ProductDTO {
+  title: string;
+  description: string;
+  price: number;
+  tags: string[];
+  isDeletedAt?: Date;
+  productImages?: ProductImage[];
+  images?: { id: string; imageUrl: string }[];
+  owner?: { id: string; name: string };
   ownerId?: string;
 }

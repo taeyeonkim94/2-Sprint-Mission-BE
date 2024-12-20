@@ -4,7 +4,7 @@ export class CreateUserDTO {
   password: string;
 }
 
-export class ResponseUserDTO {
+export class UserDTO {
   id: string;
   name: string;
   email: string;
