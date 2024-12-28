@@ -1,0 +1,59 @@
+
+GET https://two-sprint-mission-be-8e56.onrender.com/articles
+###
+GET http://localhost:3001/articles
+###
+GET http://localhost:3000/articles/f1a2b3c4-d5e6-7f8g-9h0i-j1k2l3m4n5o6
+###
+GET http://localhost:3000/articles/f1a2b3c4-d5e6-7f8g-9h0i-j1k2l3m4n5o6/withcomments?order=favoritest
+###
+GET http://localhost:3001/articles
+###
+POST http://localhost:3001/articles
+Content-Type: application/json
+
+{
+  "userId": "c2b44a5b-5d1f-4e6e-9b55-3f8e5e7e8b18",
+  "title": "리퀘스트요청 제목",
+  "content": "리퀘스트요청 내용"
+}
+### 
+PATCH http://localhost:3001/articles/2af56bae-d23d-4627-a475-e357686d93ee
+Content-Type: application/json
+
+{
+  "title": "제목수정",
+  "content": "내용수정"
+}
+###
+PATCH http://localhost:3000/articles/i4d5e6f7-g8h9-0i1j-k2l3-m4n5o6p7q8r9
+Content-Type: application/json
+
+{
+  "title": "제목수정"
+}
+###
+DELETE http://localhost:3001/articles/2af56bae-d23d-4627-a475-e357686d93ee
+###
+//********************Comment***********************************
+
+//articleComment
+GET http://localhost:3001/articles/f1a2b3c4-d5e6-7f8g-9h0i-j1k2l3m4n5o6/comments
+###
+POST http://localhost:3001/articles/f1a2b3c4-d5e6-7f8g-9h0i-j1k2l3m4n5o6/comments
+Content-Type: application/json
+
+{
+  "userId": "c2b44a5b-5d1f-4e6e-9b55-3f8e5e7e8b18",
+  "content": "댓글입니다"
+}
+###
+PATCH http://localhost:3001/articles/f1a2b3c4-d5e6-7f8g-9h0i-j1k2l3m4n5o6/comments/e3e738f6-fea1-4174-94f0-1815bd41e006
+Content-Type: application/json
+
+{
+  "content": "수정된 댓글입니다",
+  "favoriteCount": 3
+}
+###
+DELETE http://localhost:3001/articles/f1a2b3c4-d5e6-7f8g-9h0i-j1k2l3m4n5o6/comments/e3e738f6-fea1-4174-94f0-1815bd41e006
